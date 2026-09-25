@@ -2,10 +2,33 @@
   "name": "mis-podcast-site",
   "main": "worker/index.js",
   "compatibility_date": "2026-09-24",
+  "routes": [
+    {
+      "pattern": "podcast.manchesterintelligencesociety.com",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/feed-proxy", "/audio-proxy/*"]
-  }
+    // With SPA fallback on, a path only reaches the Worker if it's listed
+    // here — otherwise it's served index.html directly. worker/index.js
+    // implements /feed-proxy, /api/upload and /audio/:key, so all three
+    // need to be here. (/audio-proxy/* was the old anchor.fm-era dev
+    // proxy path — worker/index.js doesn't implement it, so it's dropped.)
+    "run_worker_first": ["/feed-proxy", "/api/upload", "/audio/*"]
+  },
+  "r2_buckets": [
+    {
+      "binding": "AUDIO_BUCKET",
+      "bucket_name": "mis-podcast-audio"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "EPISODES",
+      "id": "27bf899fd4f6400d98921de5ddccda67"
+    }
+  ]
 }
