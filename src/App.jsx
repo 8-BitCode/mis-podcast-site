@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import HomePage from './pages/HomePage.jsx'
 import EpisodePage from './pages/EpisodePage.jsx'
+import UploadPage from './pages/UploadPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 import { PlayerProvider } from './context/PlayerContext.jsx'
 
@@ -18,6 +19,7 @@ export default function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/upload" element={<UploadPage />} />
             <Route path="/:slug" element={<EpisodePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
